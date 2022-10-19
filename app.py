@@ -25,6 +25,7 @@ def get_Boxes():
 @app.post("/Box")
 def create_Box():
     request_data = request.get_json()
+    
     new_box = {"name": request_data["name"], "items": []}
     Box.append(new_box)
     return new_box, 201
