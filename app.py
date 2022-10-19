@@ -18,12 +18,12 @@ Box = [
 
 
 @app.get("/Box")  # http://127.0.0.1:5000/Box
-def get_stores():
+def get_Boxes():
     return {"Box": Box}
 
 
 @app.post("/Box")
-def create_store():
+def create_Box():
     request_data = request.get_json()
     new_box = {"name": request_data["name"], "items": []}
     Box.append(new_box)
