@@ -1,48 +1,58 @@
 
-from urllib import request
+from flask import request
 from flask import Flask
 
 app = Flask(__name__)
 
-games = [
+Box = [
     {
-        "Category": "Shooters",
-        "Items": [
-            {"Name": "Call Of Duty",
-             "price": 40.99}
+        "name": "MyBox",
+        "items": [
+            {
+                "name": "Toy",
+                "Weight": "15m"
+            }
         ]
     }
 ]
 
 
-@app.get("/games")  # http://127.0.0.1:5000/games
-def get_games():
-    return {"games": games}
+@app.get("/Box")  # http://127.0.0.1:5000/Box
+def get_stores():
+    return {"Box": Box}
 
 
-@app.post("/games")
-def create_category():
+@app.post("/Box")
+def create_store():
     request_data = request.get_json()
-    new_category = {"Name": request_data["Name"], "Items": []}
-    games.append(new_category)
-    return new_category, 201
+    new_box = {"name": request_data["name"], "items": []}
+    Box.append(new_box)
+    return new_box, 201
 
 
-@app.post("/games/<string:name>/item")
+@app.post("/Box/<string:name>/item")
 def create_item(name):
     request_data = request.get_json()
-    for game in games:
-        if game["name"] == name:
+    for box in Box:
+        if box["name"] == name:
             new_item = {
-                "name": request_data["name"], "price": request_data["price"]}
-            game["items"].append(new_item)
+                "name": request_data["name"], "Weight": request_data["Weight"]}
+            box["items"].append(new_item)
             return new_item
-    return {"message": "Game not found"}, 404
+    return {"message": "Box not found"}, 404
 
 
-@app.get("/games/<string:name>")
-def get_game(name):
-    for game in games:
-        if game["name"] == name:
-            return game
-    return {"message": "Game not found"}, 404
+@app.get("/Box/<string:name>")
+def get_store(name):
+    for box in Box:
+        if box["name"] == name:
+            return box
+    return {"message": "box not found"}, 404
+
+
+@app.get("/Box/<string:name>/item")
+def get_item_in_box(name):
+    for box in Box:
+        if box["name"] == name:
+            return {"items": box["items"]}
+    return {"message": "Box not found"}, 404
