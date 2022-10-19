@@ -1,3 +1,4 @@
+from urllib import request
 from flask import Flask
 
 app = Flask(__name__)
@@ -26,7 +27,7 @@ def create_category():
     return new_category, 201
 
 
-@app.post("/game/<string:name>/item")
+@app.post("/games/<string:name>/item")
 def create_item(name):
     request_data = request.get_json()
     for game in games:
@@ -35,11 +36,11 @@ def create_item(name):
                 "name": request_data["name"], "price": request_data["price"]}
             game["items"].append(new_item)
             return new_item
-    return {"message": "Store not found"}, 404
+    return {"message": "Game not found"}, 404
 
 
-@app.get("/store/<string:name>")
-def get_store(name):
+@app.get("/games/<string:name>")
+def get_game(name):
     for game in games:
         if game["name"] == name:
             return game
