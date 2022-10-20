@@ -17,7 +17,7 @@ Box = [
 ]
 
 
-@app.get("/Box")  # http://127.0.0.1:5000/Box
+@app.get("/Box")  # http://127.0.0.1:5000/Box  #obtain data
 def get_Boxes():
     return {"Box": Box}
 
