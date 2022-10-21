@@ -22,20 +22,20 @@ def get_Boxes():
     return {"Boxes": Boxes}
 
 
-@app.post("/Boxes")   #create new Box
+@app.post("/Boxes")   #create a new Box
 def create_Box():   #def a function
-    request_data = request.get_json()  #obtain data of json
+    request_data = request.get_json()  #obtain data of a json file
     
-    new_box = {"name": request_data["name"], "items": []} #create de box bases on the info in "request data"
+    new_box = {"name": request_data["name"], "items": []} #create a box based oi the info on "request data"
     Boxes.append(new_box) #append the new box to the principal collection
     return new_box, 201  #message of success
 
 
 @app.post("/Boxes/<string:name>/item")    #create a new item
 def create_item(name):   #def a function
-    request_data = request.get_json() #obtain data of json in a variable
+    request_data = request.get_json() #save data of json in a variable
     for box in Boxes:   #create a for on the  box collection
-        if box["name"] == name: #condition to the creaation of an item
+        if box["name"] == name: #condition to the creation of an item
             new_item = {
                 "name": request_data["name"], "Weight": request_data["Weight"]} #creation of the item based on the json data
             box["items"].append(new_item)  #append the new item to the box
